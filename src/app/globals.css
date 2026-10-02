@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+:root {
+  --forest: #2f4a28;
+  --forest-deep: #1e321c;
+  --leaf: #7cb342;
+  --lime: #8cc63f;
+  --teal: #00a99d;
+  --ocean: #0054a6;
+  --ocean-deep: #033a73;
+  --sand: #f3f6f1;
+  --mist: #e7eee4;
+  --ink: #152018;
+  --muted: #5b6b5f;
+  --surface: #ffffff;
+  --stroke: rgba(47, 74, 40, 0.12);
+  --glow: rgba(140, 198, 63, 0.22);
+  --background: var(--sand);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-leaf: var(--leaf);
+  --color-lime: var(--lime);
+  --color-teal: var(--teal);
+  --color-ocean: var(--ocean);
+  --color-ocean-deep: var(--ocean-deep);
+  --color-sand: var(--sand);
+  --color-mist: var(--mist);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-stroke: var(--stroke);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--lime) 45%, white);
+  color: var(--forest-deep);
+}
+
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+.brand-gradient {
+  background-image: linear-gradient(
+    120deg,
+    var(--lime) 0%,
+    var(--teal) 48%,
+    var(--ocean) 100%
+  );
+}
+
+.brand-text {
+  background-image: linear-gradient(
+    110deg,
+    var(--lime) 0%,
+    var(--teal) 45%,
+    var(--ocean) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dot-grid {
+  background-image: radial-gradient(
+    rgba(47, 74, 40, 0.18) 1px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+}
+
+.stripe-panel {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--forest-deep),
+    var(--forest-deep) 14px,
+    var(--forest) 14px,
+    var(--forest) 28px
+  );
+}
+
+.earth-stripes {
+  background: repeating-linear-gradient(
+    -42deg,
+    #1e321c 0 14px,
+    #2f4a28 14px 28px,
+    #4a6b3a 28px 42px,
+    #6f9f3a 42px 56px
+  );
+}
+
+.earth-mesh {
+  background:
+    radial-gradient(ellipse at 18% 18%, rgba(140, 198, 63, 0.22), transparent 42%),
+    radial-gradient(ellipse at 82% 12%, rgba(0, 169, 157, 0.16), transparent 40%),
+    radial-gradient(ellipse at 70% 88%, rgba(47, 74, 40, 0.06), transparent 45%),
+    linear-gradient(165deg, #eef5ea 0%, #f7faf5 42%, #e8f1f4 100%);
+}
+
+/* Subtle botanical motif — CSS only, no photos */
+.leaf-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%232f4a28' stroke-width='1' opacity='0.12'%3E%3Cpath d='M40 12c8 10 12 20 12 28s-4 14-12 22c-8-8-12-14-12-22s4-18 12-28z'/%3E%3Cpath d='M40 20v32'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
+}
+
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.section-pad {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.container-page {
+  width: min(1180px, calc(100% - 2.5rem));
+  margin-inline: auto;
+}
+
+.reveal-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(47, 74, 40, 0.25),
+    transparent
+  );
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(1.5deg);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-drift {
+  animation: drift 8s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.8s ease-out infinite;
+}
