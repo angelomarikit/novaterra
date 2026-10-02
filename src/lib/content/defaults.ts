@@ -1,4 +1,4 @@
-import type { SiteSettings, TeamMember } from "@/types/content";
+import type { BlogPost, NewsSectionHeader, SiteSettings, TeamMember } from "@/types/content";
 
 export const SITE: SiteSettings = {
   company_name: "Novaterra Circular Economy Inc.",
@@ -16,6 +16,73 @@ export const SECTION_IMAGES = {
   technology_pyrolysis: "/sections/pyrolysis.jpg",
   sustainability_esg: "/sections/sustainability.jpg",
 } as const;
+
+export const NEWS_IMAGES = {
+  circular: "/news/circular-infrastructure.jpg",
+  pyrolysis: "/news/pyrolysis.jpg",
+  partnership: "/news/partnership.jpg",
+} as const;
+
+export const NEWS_SECTION: NewsSectionHeader = {
+  eyebrow: "News & insights",
+  title: "News, Articles & Insights",
+  subtitle:
+    "Follow project milestones, technology explainers, and partnership updates as Novaterra develops responsible waste-to-resource infrastructure.",
+};
+
+const isoDaysAgo = (days: number) =>
+  new Date(Date.now() - days * 86400000).toISOString();
+
+export const DEFAULT_BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "scaling-circular-infrastructure",
+    title: "Scaling responsible circular infrastructure in the Philippines",
+    excerpt:
+      "Novaterra is advancing integrated waste recovery facilities designed to divert suitable streams from landfills and return materials to productive use.",
+    body: `Modern economies generate rising volumes of residual waste while industries still depend on energy and raw materials. Novaterra Circular Economy Inc. is developing infrastructure that converts selected waste streams into recovered fuels, syngas, and carbon-rich materials through controlled pyrolysis and complementary recovery steps.
+
+Our approach prioritizes environmental safeguards, community engagement, and long-term operability — not one-off disposal projects. Each facility is planned as part of a broader network connecting municipalities, waste generators, logistics partners, and industrial off-takers.
+
+As we progress site development and partnerships, we will share milestones on technology commissioning, feedstock qualification, and regional collaboration that supports a more circular resource system.`,
+    category: "news",
+    image_url: NEWS_IMAGES.circular,
+    published_at: isoDaysAgo(12),
+    sort_order: 1,
+    is_published: true,
+  },
+  {
+    slug: "understanding-pyrolysis-for-waste-recovery",
+    title: "Understanding pyrolysis for waste-to-resource recovery",
+    excerpt:
+      "Pyrolysis thermally breaks down carbon-rich materials with limited oxygen, producing oils, gases, and solid carbon products instead of open burning or uncontrolled disposal.",
+    body: `Pyrolysis is a core technology in Novaterra's recovery toolkit. Suitable organic or carbon-containing feedstocks are heated in a controlled environment where oxygen is limited. Complex molecules break into simpler compounds that can be captured as pyrolysis oil, syngas, and biochar or carbon black.
+
+Unlike incineration focused on disposal, pyrolysis is oriented toward material and energy recovery — provided feedstocks are properly screened and emissions controls are engineered into the plant design.
+
+Novaterra integrates pyrolysis with sorting, pre-treatment, and product handling so recovered outputs can meet industrial specifications.`,
+    category: "article",
+    image_url: NEWS_IMAGES.pyrolysis,
+    published_at: isoDaysAgo(26),
+    sort_order: 2,
+    is_published: true,
+  },
+  {
+    slug: "partnerships-for-regional-circular-systems",
+    title: "Building partnerships for regional circular systems",
+    excerpt:
+      "Circular infrastructure succeeds when municipalities, industry, and communities align on feedstock, logistics, and shared environmental outcomes.",
+    body: `Circular-economy infrastructure is inherently collaborative. Novaterra works with local governments, waste generators, logistics providers, and industrial users to design systems that are technically sound and economically viable.
+
+Partnerships help define acceptable feedstock streams, collection routes, and product markets before capital is deployed. They also create transparency around environmental monitoring, safety, and community benefit — essential for long-term acceptance.
+
+We welcome conversations with municipalities exploring alternatives to landfill dependence, companies seeking recovered materials or energy carriers, and investors interested in durable environmental infrastructure.`,
+    category: "blog",
+    image_url: NEWS_IMAGES.partnership,
+    published_at: isoDaysAgo(40),
+    sort_order: 3,
+    is_published: true,
+  },
+];
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 const LINKS = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/content", label: "Page Content" },
+  { href: "/admin/news", label: "News & Articles" },
   { href: "/admin/messages", label: "Contact Messages" },
 ];
 
@@ -30,18 +31,67 @@ export function AdminShell({
   }
 
   return (
-    <div className="min-h-screen bg-sand">
-      <header className="border-b border-stroke bg-white">
-        <div className="mx-auto flex w-[min(1100px,calc(100%-2rem))] items-center justify-between gap-4 py-4">
-          <div>
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-teal">
-              Novaterra CMS
+    <div className="flex min-h-screen bg-sand">
+      {/* Sidebar */}
+      <aside className="sticky top-0 flex h-screen w-[240px] shrink-0 flex-col border-r border-stroke bg-white">
+        <div className="border-b border-stroke px-5 py-5">
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-teal">
+            Novaterra CMS
+          </p>
+          <h1 className="mt-1 font-display text-base font-semibold leading-snug text-forest-deep">
+            Content Administration
+          </h1>
+        </div>
+
+        <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
+          {LINKS.map((link) => {
+            const active =
+              link.href === "/admin"
+                ? pathname === "/admin"
+                : pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "block rounded-lg px-3 py-2.5 text-sm font-medium transition",
+                  active
+                    ? "bg-forest text-white"
+                    : "text-muted hover:bg-sand hover:text-forest",
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {email ? (
+          <div className="border-t border-stroke px-5 py-4">
+            <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted">
+              Signed in as
             </p>
-            <h1 className="font-display text-lg font-semibold text-forest-deep">
-              Content Administration
-            </h1>
+            <p
+              className="mt-1 break-all text-xs font-medium leading-snug text-forest"
+              title={email}
+            >
+              {email}
+            </p>
           </div>
-          <div className="flex items-center gap-3">
+        ) : null}
+      </aside>
+
+      {/* Main column */}
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-stroke bg-white/95 px-6 py-3 backdrop-blur sm:px-8">
+          <p className="truncate text-sm text-muted">
+            {LINKS.find((l) =>
+              l.href === "/admin"
+                ? pathname === "/admin"
+                : pathname.startsWith(l.href),
+            )?.label ?? "Admin"}
+          </p>
+          <div className="flex shrink-0 items-center gap-3">
             <Link href="/" className="text-sm text-muted hover:text-forest">
               View site
             </Link>
@@ -49,54 +99,16 @@ export function AdminShell({
               Sign out
             </Button>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {!configured ? (
-        <div className="border-b border-leaf/20 bg-leaf/10 px-4 py-3 text-center text-sm text-forest">
-          Local admin mode — connect Supabase to enable cloud CMS and live
-          contact inbox.
-        </div>
-      ) : null}
+        {!configured ? (
+          <div className="border-b border-leaf/20 bg-leaf/10 px-6 py-2.5 text-center text-sm text-forest sm:px-8">
+            Local admin mode — connect Supabase to enable cloud CMS and live
+            contact inbox.
+          </div>
+        ) : null}
 
-      <div className="mx-auto grid w-[min(1100px,calc(100%-2rem))] gap-6 py-8 lg:grid-cols-[220px_1fr]">
-        <aside className="h-fit min-w-0 overflow-hidden rounded-2xl border border-stroke bg-white p-3">
-          <nav className="space-y-1">
-            {LINKS.map((link) => {
-              const active =
-                link.href === "/admin"
-                  ? pathname === "/admin"
-                  : pathname.startsWith(link.href);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "block rounded-xl px-3 py-2.5 text-sm font-medium transition",
-                    active
-                      ? "bg-forest text-white"
-                      : "text-muted hover:bg-sand hover:text-forest",
-                  )}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
-          {email ? (
-            <p className="mt-4 border-t border-stroke px-3 pt-4 text-xs text-muted">
-              Signed in as
-              <br />
-              <span
-                className="mt-1 block break-all font-medium leading-snug text-forest"
-                title={email}
-              >
-                {email}
-              </span>
-            </p>
-          ) : null}
-        </aside>
-        <div>{children}</div>
+        <main className="flex-1 px-6 py-8 sm:px-8">{children}</main>
       </div>
     </div>
   );

@@ -73,6 +73,27 @@ create index if not exists contact_messages_created_idx
   on public.contact_messages (created_at desc);
 
 -- ------------------------------------------------------------
+-- News, articles & blog posts (home + detail pages)
+-- ------------------------------------------------------------
+create table if not exists public.blog_posts (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  title text not null,
+  excerpt text,
+  body text not null,
+  category text not null default 'news'
+    check (category in ('news', 'article', 'blog')),
+  image_url text,
+  published_at timestamptz not null default now(),
+  sort_order int not null default 0,
+  is_published boolean not null default true,
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists blog_posts_published_idx
+  on public.blog_posts (is_published, sort_order, published_at desc);
+
+-- ------------------------------------------------------------
 -- Updated_at helper
 -- ------------------------------------------------------------
 create or replace function public.set_updated_at()
@@ -100,6 +121,11 @@ create trigger trg_team_members_updated
   before update on public.team_members
   for each row execute function public.set_updated_at();
 
+drop trigger if exists trg_blog_posts_updated on public.blog_posts;
+create trigger trg_blog_posts_updated
+  before update on public.blog_posts
+  for each row execute function public.set_updated_at();
+
 -- ------------------------------------------------------------
 -- Row Level Security
 -- ------------------------------------------------------------
@@ -107,6 +133,7 @@ alter table public.site_settings enable row level security;
 alter table public.content_sections enable row level security;
 alter table public.team_members enable row level security;
 alter table public.contact_messages enable row level security;
+alter table public.blog_posts enable row level security;
 
 -- Public read for published content
 create policy "Public read site settings"
@@ -121,6 +148,11 @@ create policy "Public read published sections"
 
 create policy "Public read published team"
   on public.team_members for select
+  to anon, authenticated
+  using (is_published = true);
+
+create policy "Public read published blog posts"
+  on public.blog_posts for select
   to anon, authenticated
   using (is_published = true);
 
@@ -164,6 +196,12 @@ create policy "Admins delete contact messages"
   on public.contact_messages for delete
   to authenticated
   using (true);
+
+create policy "Admins manage blog posts"
+  on public.blog_posts for all
+  to authenticated
+  using (true)
+  with check (true);
 
 -- ------------------------------------------------------------
 -- Seed data
@@ -210,6 +248,16 @@ values
   null,
   '{"items":[{"title":"Growing Waste Volumes","body":"Communities and industries continuously generate municipal, commercial, agricultural, plastic, rubber, and other residual waste."},{"title":"Difficult-to-Recycle Materials","body":"Certain materials are technically or economically challenging to recover through conventional recycling."},{"title":"Landfill Dependence","body":"Disposal consumes land and can create long-term environmental-management requirements."},{"title":"Loss of Embedded Resources","body":"Waste can contain carbon, hydrocarbons, energy, and other materials that may still have economic value."},{"title":"Increasing Sustainability Requirements","body":"Industries and communities are increasingly seeking more resource-efficient and environmentally responsible systems."}]}'::jsonb,
   3
+),
+(
+  'home',
+  'news_highlights',
+  'News, Articles & Insights',
+  'Updates from our circular-economy journey',
+  'Follow project milestones, technology explainers, and partnership news as Novaterra develops responsible waste-to-resource infrastructure across the Philippines.',
+  null,
+  '{}'::jsonb,
+  4
 ),
 (
   'about',
@@ -264,6 +312,54 @@ insert into public.team_members (name, title, sort_order) values
   ('Natalya Moldez-Palaca', 'Administrative Officer', 5),
   ('Aldrich Walther Alvarez', 'Financial Adviser / Corporate Secretary', 6)
 on conflict do nothing;
+
+insert into public.blog_posts (slug, title, excerpt, body, category, image_url, published_at, sort_order)
+values
+(
+  'scaling-circular-infrastructure',
+  'Scaling responsible circular infrastructure in the Philippines',
+  'Novaterra is advancing integrated waste recovery facilities designed to divert suitable streams from landfills and return materials to productive use.',
+  'Modern economies generate rising volumes of residual waste while industries still depend on energy and raw materials. Novaterra Circular Economy Inc. is developing infrastructure that converts selected waste streams into recovered fuels, syngas, and carbon-rich materials through controlled pyrolysis and complementary recovery steps.
+
+Our approach prioritizes environmental safeguards, community engagement, and long-term operability — not one-off disposal projects. Each facility is planned as part of a broader network connecting municipalities, waste generators, logistics partners, and industrial off-takers.
+
+As we progress site development and partnerships, we will share milestones on technology commissioning, feedstock qualification, and regional collaboration that supports a more circular resource system.',
+  'news',
+  '/news/circular-infrastructure.jpg',
+  now() - interval '12 days',
+  1
+),
+(
+  'understanding-pyrolysis-for-waste-recovery',
+  'Understanding pyrolysis for waste-to-resource recovery',
+  'Pyrolysis thermally breaks down carbon-rich materials with limited oxygen, producing oils, gases, and solid carbon products instead of open burning or uncontrolled disposal.',
+  'Pyrolysis is a core technology in Novaterra''s recovery toolkit. Suitable organic or carbon-containing feedstocks are heated in a controlled environment where oxygen is limited. Complex molecules break into simpler compounds that can be captured as pyrolysis oil, syngas, and biochar or carbon black.
+
+Unlike incineration focused on disposal, pyrolysis is oriented toward material and energy recovery — provided feedstocks are properly screened and emissions controls are engineered into the plant design.
+
+Novaterra integrates pyrolysis with sorting, pre-treatment, and product handling so recovered outputs can meet industrial specifications. This article summarizes how the process supports circular-economy goals while requiring rigorous environmental and operational discipline.',
+  'article',
+  '/news/pyrolysis.jpg',
+  now() - interval '26 days',
+  2
+),
+(
+  'partnerships-for-regional-circular-systems',
+  'Building partnerships for regional circular systems',
+  'Circular infrastructure succeeds when municipalities, industry, and communities align on feedstock, logistics, and shared environmental outcomes.',
+  'Circular-economy infrastructure is inherently collaborative. Novaterra works with local governments, waste generators, logistics providers, and industrial users to design systems that are technically sound and economically viable.
+
+Partnerships help define acceptable feedstock streams, collection routes, and product markets before capital is deployed. They also create transparency around environmental monitoring, safety, and community benefit — essential for long-term acceptance.
+
+We welcome conversations with municipalities exploring alternatives to landfill dependence, companies seeking recovered materials or energy carriers, and investors interested in durable environmental infrastructure.',
+  'blog',
+  '/news/partnership.jpg',
+  now() - interval '40 days',
+  3
+)
+on conflict (slug) do nothing;
+
+-- Storage: run supabase/storage.sql to create the public cms-media bucket.
 
 -- ------------------------------------------------------------
 -- Admin user setup (run after creating auth user in dashboard):

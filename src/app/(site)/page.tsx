@@ -8,10 +8,21 @@ import {
   ValueChainSection,
 } from "@/components/home/CycleSections";
 import { HomeCta } from "@/components/home/HomeCta";
-import { getHomeHero, getWhyExists } from "@/lib/content/fetch";
+import { NewsSection } from "@/components/home/NewsSection";
+import {
+  getHomeHero,
+  getNewsSectionHeader,
+  getPublishedBlogPosts,
+  getWhyExists,
+} from "@/lib/content/fetch";
 
 export default async function HomePage() {
-  const [hero, whyExists] = await Promise.all([getHomeHero(), getWhyExists()]);
+  const [hero, whyExists, newsHeader, posts] = await Promise.all([
+    getHomeHero(),
+    getWhyExists(),
+    getNewsSectionHeader(),
+    getPublishedBlogPosts(3),
+  ]);
 
   return (
     <>
@@ -20,6 +31,7 @@ export default async function HomePage() {
       <WasteChallengeSection />
       <NovaterraCycleSection />
       <ValueChainSection />
+      <NewsSection header={newsHeader} posts={posts} />
       <HomeCta />
     </>
   );

@@ -38,3 +38,24 @@ export type ContactMessage = {
   created_at: string;
   is_read: boolean;
 };
+
+export type NewsCategory = "news" | "article" | "blog";
+
+export type BlogPost = {
+  id?: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  body: string;
+  category: NewsCategory;
+  image_url: string | null;
+  published_at: string;
+  sort_order: number;
+  is_published: boolean;
+};
+
+export type NewsSectionHeader = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+};

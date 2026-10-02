@@ -1,11 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
-import type { ContentSection } from "@/types/content";
+import type { BlogPost, ContentSection, NewsSectionHeader } from "@/types/content";
 import {
   HERO,
   WHY_EXISTS,
   SITE,
   SECTION_IMAGES,
   LONG_TERM_VISION,
+  NEWS_SECTION,
+  DEFAULT_BLOG_POSTS,
 } from "@/lib/content/defaults";
 
 export async function getSection(
@@ -101,6 +103,55 @@ export async function getSectionImage(
 ) {
   const section = await getSection(pageKey, sectionKey);
   return section?.image_url || fallback;
+}
+
+export async function getNewsSectionHeader(): Promise<NewsSectionHeader> {
+  const section = await getSection("home", "news_highlights");
+  if (!section) return NEWS_SECTION;
+
+  return {
+    eyebrow: NEWS_SECTION.eyebrow,
+    title: section.title || NEWS_SECTION.title,
+    subtitle:
+      section.subtitle ||
+      section.body?.slice(0, 200) ||
+      NEWS_SECTION.subtitle,
+  };
+}
+
+export async function getPublishedBlogPosts(limit = 6): Promise<BlogPost[]> {
+  const supabase = await createClient();
+  if (!supabase) return DEFAULT_BLOG_POSTS.slice(0, limit);
+
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("is_published", true)
+    .order("sort_order", { ascending: true })
+    .order("published_at", { ascending: false })
+    .limit(limit);
+
+  if (!data?.length) return DEFAULT_BLOG_POSTS.slice(0, limit);
+  return data as BlogPost[];
+}
+
+export async function getBlogPostBySlug(
+  slug: string,
+): Promise<BlogPost | null> {
+  const supabase = await createClient();
+  if (!supabase) {
+    return DEFAULT_BLOG_POSTS.find((p) => p.slug === slug) ?? null;
+  }
+
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .maybeSingle();
+
+  if (data) return data as BlogPost;
+  return DEFAULT_BLOG_POSTS.find((p) => p.slug === slug) ?? null;
 }
 
 export async function getLongTermVision() {

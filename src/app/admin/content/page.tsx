@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import { CmsImageField } from "@/components/admin/CmsImageField";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { Button } from "@/components/ui/Button";
@@ -12,6 +12,7 @@ import {
   PYROLYSIS,
   FUTURE_STATEMENT,
   LONG_TERM_VISION,
+  NEWS_SECTION,
   SECTION_IMAGES,
 } from "@/lib/content/defaults";
 
@@ -88,6 +89,17 @@ const FALLBACK: ContentSection[] = [
     image_url: null,
     content_json: {},
     sort_order: 2,
+    is_published: true,
+  },
+  {
+    page_key: "home",
+    section_key: "news_highlights",
+    title: NEWS_SECTION.title,
+    subtitle: NEWS_SECTION.subtitle,
+    body: NEWS_SECTION.subtitle,
+    image_url: null,
+    content_json: {},
+    sort_order: 4,
     is_published: true,
   },
   {
@@ -273,67 +285,14 @@ export default function AdminContentPage() {
               />
             </label>
 
-            <div className="rounded-2xl border border-stroke bg-sand/30 p-4">
-              <label className="block text-sm">
-                <span className="mb-1.5 block font-medium text-forest">
-                  Section image URL
-                </span>
-                <input
-                  value={active.image_url ?? ""}
-                  onChange={(e) =>
-                    updateActive({ image_url: e.target.value || null })
-                  }
-                  placeholder="/sections/recovery.jpg or https://..."
-                  className="w-full rounded-xl border border-stroke bg-white px-4 py-3 outline-none focus:border-teal"
-                />
-              </label>
-              <p className="mt-2 text-xs text-muted">
-                Paste a path like <code>/sections/vision.jpg</code> or a full
-                hosted URL. Leave empty for no image.
-              </p>
-              {active.image_url ? (
-                <div className="relative mt-3 aspect-[16/10] overflow-hidden rounded-xl border border-stroke bg-white">
-                  <Image
-                    src={active.image_url}
-                    alt="Section preview"
-                    fill
-                    className="object-cover"
-                    sizes="480px"
-                    unoptimized={active.image_url.startsWith("http")}
-                  />
-                </div>
-              ) : null}
-              <div className="mt-3 flex flex-wrap gap-2">
-                {Object.values(SECTION_IMAGES).map((src) => (
-                  <button
-                    key={src}
-                    type="button"
-                    onClick={() => updateActive({ image_url: src })}
-                    className="rounded-full border border-stroke bg-white px-3 py-1 text-xs text-forest hover:border-teal"
-                  >
-                    Use {src.split("/").pop()}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <CmsImageField
+              label="Section image"
+              folder="sections"
+              value={active.image_url}
+              onChange={(url) => updateActive({ image_url: url })}
+              quickPick={Object.values(SECTION_IMAGES)}
+            />
 
-            <label className="block text-sm">
-              <span className="mb-1.5 block font-medium text-forest">
-                Extra JSON (tags, lists, etc.)
-              </span>
-              <textarea
-                rows={5}
-                value={JSON.stringify(active.content_json, null, 2)}
-                onChange={(e) => {
-                  try {
-                    updateActive({ content_json: JSON.parse(e.target.value) });
-                  } catch {
-                    /* allow typing invalid JSON temporarily */
-                  }
-                }}
-                className="w-full rounded-xl border border-stroke bg-sand/40 px-4 py-3 font-mono text-xs outline-none focus:border-teal"
-              />
-            </label>
             <label className="inline-flex items-center gap-2 text-sm text-forest">
               <input
                 type="checkbox"
