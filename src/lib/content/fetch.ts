@@ -1,5 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
-import type { BlogPost, ContentSection, NewsSectionHeader } from "@/types/content";
+import type {
+  BlogPost,
+  ContentSection,
+  NewsSectionHeader,
+  TeamMember,
+} from "@/types/content";
 import {
   HERO,
   WHY_EXISTS,
@@ -8,6 +13,7 @@ import {
   LONG_TERM_VISION,
   NEWS_SECTION,
   DEFAULT_BLOG_POSTS,
+  TEAM,
 } from "@/lib/content/defaults";
 
 export async function getSection(
@@ -103,6 +109,29 @@ export async function getSectionImage(
 ) {
   const section = await getSection(pageKey, sectionKey);
   return section?.image_url || fallback;
+}
+
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  const supabase = await createClient();
+  if (!supabase) {
+    return TEAM.filter((m) => m.is_published).sort(
+      (a, b) => a.sort_order - b.sort_order,
+    );
+  }
+
+  const { data } = await supabase
+    .from("team_members")
+    .select("*")
+    .eq("is_published", true)
+    .order("sort_order", { ascending: true });
+
+  if (!data?.length) {
+    return TEAM.filter((m) => m.is_published).sort(
+      (a, b) => a.sort_order - b.sort_order,
+    );
+  }
+
+  return data as TeamMember[];
 }
 
 export async function getNewsSectionHeader(): Promise<NewsSectionHeader> {

@@ -21,12 +21,17 @@ export const metadata: Metadata = {
   },
   description:
     "From waste to progress: building circular-economy infrastructure through advanced pyrolysis and resource-recovery technologies.",
-  metadataBase: new URL("https://novaterracirculareconomy.com"),
+  metadataBase: new URL("https://novaterracircular.com"),
+  icons: {
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+  },
   openGraph: {
     title: "Novaterra Circular Economy Inc.",
     description:
       "Transforming waste. Recovering value. Building a circular future.",
     type: "website",
+    url: "https://novaterracircular.com",
   },
 };
 

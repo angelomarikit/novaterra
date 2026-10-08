@@ -4,12 +4,12 @@ import {
   MISSION,
   VALUES,
   COMMITMENTS,
-  TEAM,
   WHY_EXISTS,
 } from "@/lib/content/defaults";
 import { FadeIn, SectionHeading } from "@/components/shared/Motion";
 import { SectionImage } from "@/components/shared/SectionImage";
-import { getLongTermVision } from "@/lib/content/fetch";
+import { TeamSection } from "@/components/about/TeamSection";
+import { getLongTermVision, getTeamMembers } from "@/lib/content/fetch";
 
 export const metadata: Metadata = {
   title: "About",
@@ -18,7 +18,10 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const vision = await getLongTermVision();
+  const [vision, team] = await Promise.all([
+    getLongTermVision(),
+    getTeamMembers(),
+  ]);
 
   return (
     <>
@@ -124,39 +127,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="section-pad bg-white">
-        <div className="container-page">
-          <FadeIn>
-            <SectionHeading
-              eyebrow="The Novaterra Team"
-              title="The people building circular infrastructure"
-              subtitle="Leadership spanning technology, operations, management, and governance."
-            />
-          </FadeIn>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {TEAM.map((member, i) => (
-              <FadeIn key={member.name} delay={i * 0.04}>
-                <article className="flex items-center gap-4 rounded-3xl border border-stroke bg-sand/40 p-5">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl brand-gradient text-sm font-bold text-white">
-                    {member.name
-                      .split(" ")
-                      .filter((p) => !p.toLowerCase().startsWith("engr"))
-                      .slice(0, 2)
-                      .map((p) => p[0])
-                      .join("")}
-                  </div>
-                  <div>
-                    <h3 className="font-display text-base font-semibold text-forest-deep">
-                      {member.name}
-                    </h3>
-                    <p className="mt-1 text-sm text-teal">{member.title}</p>
-                  </div>
-                </article>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TeamSection members={team} />
 
       <section className="section-pad">
         <div className="container-page">

@@ -211,9 +211,9 @@ values (
   'Novaterra Circular Economy Inc.',
   'From Waste to Progress: Building a Sustainable Future',
   '0898-2001599',
-  'novaterracircular.info@gmail.com',
+  'info@novaterracircular.com',
   'B10 L14 Kroner Street, Villa Carolina 1, Tunasan, Muntinlupa City, 1773',
-  'novaterracirculareconomy.com'
+  'novaterracircular.com'
 )
 on conflict do nothing;
 
@@ -304,14 +304,22 @@ on conflict (page_key, section_key) do nothing;
 -- If you already created content_sections without image_url, run:
 -- alter table public.content_sections add column if not exists image_url text;
 
-insert into public.team_members (name, title, sort_order) values
-  ('Raymo Gino L. Palaca', 'Chairman / CEO', 1),
-  ('Engr. Cornelio Macapagal', 'Chief Technology Officer', 2),
-  ('Engr. Ian Lorenz Agcamaran', 'Chief Management Officer', 3),
-  ('Engr. Oscarlito Malveda', 'Chief Operating Officer', 4),
-  ('Natalya Moldez-Palaca', 'Administrative Officer', 5),
-  ('Aldrich Walther Alvarez', 'Financial Adviser / Corporate Secretary', 6)
+insert into public.team_members (name, title, photo_url, sort_order, is_published) values
+  ('Raymo Gino L. Palaca', 'Chairman / CEO', '/team/raymo-gino-palaca.jpg', 1, true),
+  ('Engr. Cornelio Macapagal', 'Chief Technology Officer', '/team/cornelio-macapagal.jpg', 2, true),
+  ('Engr. Ian Lorenz Agcamaran', 'Chief Management Officer', '/team/ian-lorenz-agcamaran.jpg', 3, true),
+  ('Jared Alvin Valarao', 'Chief Finance Officer', '/team/jared-alvin-valarao.jpg', 4, true),
+  ('Engr. Oscarlito Malveda', 'Chief Operating Officer', '/team/oscarlito-malveda.jpg', 5, true),
+  ('Natalya Moldez-Palaca', 'Administrative Officer', '/team/natalya-moldez-palaca.jpg', 6, true),
+  ('Aldrich Walther Alvarez', 'Financial Adviser / Corporate Secretary', '/team/aldrich-walther-alvarez.jpg', 7, true),
+  ('Henry Klapproth', 'Investment Relations', '/team/henry-klapproth.jpg', 8, true),
+  ('Team Member', 'Position Title', null, 9, false),
+  ('Team Member', 'Position Title', null, 10, false)
 on conflict do nothing;
+
+-- If team_members already seeded earlier, sync roles/photos:
+-- update public.team_members set photo_url = '/team/raymo-gino-palaca.jpg' where name = 'Raymo Gino L. Palaca';
+-- (or re-run from Admin → Team after uploading clearer headshots)
 
 insert into public.blog_posts (slug, title, excerpt, body, category, image_url, published_at, sort_order)
 values

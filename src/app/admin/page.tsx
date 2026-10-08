@@ -85,7 +85,10 @@ function Dashboard({
           { label: "Content sections", value: String(sections) },
           { label: "Published posts", value: String(posts) },
           { label: "Unread messages", value: String(unread) },
-          { label: "Team profiles", value: String(TEAM.length) },
+          {
+            label: "Team profiles",
+            value: String(TEAM.filter((m) => m.is_published).length),
+          },
         ].map((card) => (
           <div
             key={card.label}

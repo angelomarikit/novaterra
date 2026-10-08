@@ -24,6 +24,8 @@ export type TeamMember = {
   id?: string;
   name: string;
   title: string;
+  bio?: string | null;
+  photo_url?: string | null;
   sort_order: number;
   is_published: boolean;
 };

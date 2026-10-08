@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/content", label: "Page Content" },
   { href: "/admin/news", label: "News & Articles" },
+  { href: "/admin/team", label: "Team" },
   { href: "/admin/messages", label: "Contact Messages" },
 ];
 

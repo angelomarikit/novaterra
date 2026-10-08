@@ -48,6 +48,7 @@ export default function AdminLoginPage() {
           <span className="relative h-14 w-40">
             <Image
               src="/logo.png"
+              quality={100}
               alt="Novaterra"
               fill
               className="object-contain object-left"

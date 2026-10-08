@@ -4,9 +4,9 @@ export const SITE: SiteSettings = {
   company_name: "Novaterra Circular Economy Inc.",
   tagline: "From Waste to Progress: Building a Sustainable Future",
   phone: "0898-2001599",
-  email: "novaterracircular.info@gmail.com",
+  email: "info@novaterracircular.com",
   address: "B10 L14 Kroner Street, Villa Carolina 1, Tunasan, Muntinlupa City, 1773",
-  website: "novaterracirculareconomy.com",
+  website: "novaterracircular.com",
 };
 
 /** Default section images — editable via Admin CMS (image_url) */
@@ -89,6 +89,7 @@ export const NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/technology", label: "Technology" },
   { href: "/sustainability", label: "Sustainability" },
+  { href: "/news", label: "News & Updates" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
@@ -205,12 +206,77 @@ export const COMMITMENTS = [
 ];
 
 export const TEAM: TeamMember[] = [
-  { name: "Raymo Gino L. Palaca", title: "Chairman / CEO", sort_order: 1, is_published: true },
-  { name: "Engr. Cornelio Macapagal", title: "Chief Technology Officer", sort_order: 2, is_published: true },
-  { name: "Engr. Ian Lorenz Agcamaran", title: "Chief Management Officer", sort_order: 3, is_published: true },
-  { name: "Engr. Oscarlito Malveda", title: "Chief Operating Officer", sort_order: 4, is_published: true },
-  { name: "Natalya Moldez-Palaca", title: "Administrative Officer", sort_order: 5, is_published: true },
-  { name: "Aldrich Walther Alvarez", title: "Financial Adviser / Corporate Secretary", sort_order: 6, is_published: true },
+  {
+    name: "Raymo Gino L. Palaca",
+    title: "Chairman / CEO",
+    photo_url: "/team/raymo-gino-palaca.jpg",
+    sort_order: 1,
+    is_published: true,
+  },
+  {
+    name: "Engr. Cornelio Macapagal",
+    title: "Chief Technology Officer",
+    photo_url: "/team/cornelio-macapagal.jpg",
+    sort_order: 2,
+    is_published: true,
+  },
+  {
+    name: "Engr. Ian Lorenz Agcamaran",
+    title: "Chief Management Officer",
+    photo_url: "/team/ian-lorenz-agcamaran.jpg",
+    sort_order: 3,
+    is_published: true,
+  },
+  {
+    name: "Jared Alvin Valarao",
+    title: "Chief Finance Officer",
+    photo_url: "/team/jared-alvin-valarao.jpg",
+    sort_order: 4,
+    is_published: true,
+  },
+  {
+    name: "Engr. Oscarlito Malveda",
+    title: "Chief Operating Officer",
+    photo_url: "/team/oscarlito-malveda.jpg",
+    sort_order: 5,
+    is_published: true,
+  },
+  {
+    name: "Natalya Moldez-Palaca",
+    title: "Administrative Officer",
+    photo_url: "/team/natalya-moldez-palaca.jpg",
+    sort_order: 6,
+    is_published: true,
+  },
+  {
+    name: "Aldrich Walther Alvarez",
+    title: "Financial Adviser / Corporate Secretary",
+    photo_url: "/team/aldrich-walther-alvarez.jpg",
+    sort_order: 7,
+    is_published: true,
+  },
+  {
+    name: "Henry Klapproth",
+    title: "Investment Relations",
+    photo_url: "/team/henry-klapproth.jpg",
+    sort_order: 8,
+    is_published: true,
+  },
+  // Draft slots — publish from Admin → Team when ready
+  {
+    name: "Team Member",
+    title: "Position Title",
+    photo_url: null,
+    sort_order: 9,
+    is_published: false,
+  },
+  {
+    name: "Team Member",
+    title: "Position Title",
+    photo_url: null,
+    sort_order: 10,
+    is_published: false,
+  },
 ];
 
 export const PYROLYSIS = {

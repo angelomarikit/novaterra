@@ -39,10 +39,10 @@ export default async function NewsArticlePage({
     <article className="section-pad">
       <div className="container-page max-w-3xl">
         <Link
-          href="/"
+          href="/news"
           className="text-sm font-medium text-teal hover:text-forest"
         >
-          ← Back to home
+          ← News & Updates
         </Link>
         <p className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-teal">
           {CATEGORY_LABEL[post.category]}

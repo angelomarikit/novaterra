@@ -18,18 +18,19 @@ export function Logo({
         className={cn("group inline-flex items-center gap-3", className)}
         aria-label="Novaterra Circular Economy Inc. home"
       >
-        <span className="relative h-11 w-11 shrink-0">
+        <span className="relative h-12 w-12 shrink-0 sm:h-14 sm:w-14">
           <Image
-            src="/logo-mark.png"
+            src="/logo-mark-clean.png"
             alt=""
-            fill
-            sizes="44px"
-            className="object-contain"
+            width={112}
+            height={112}
+            className="h-full w-full object-contain"
             priority={priority}
+            quality={100}
           />
         </span>
         <span className="leading-tight">
-          <span className="block font-display text-[0.95rem] font-bold tracking-[0.08em] text-white transition-colors group-hover:text-lime">
+          <span className="block font-display text-[0.95rem] font-bold tracking-[0.08em] text-white transition-colors group-hover:text-lime sm:text-base">
             NOVATERRA
           </span>
           <span className="block text-[0.62rem] font-medium uppercase tracking-[0.18em] text-white/65">
@@ -46,16 +47,15 @@ export function Logo({
       className={cn("group inline-flex items-center", className)}
       aria-label="Novaterra Circular Economy Inc. home"
     >
-      <span className="relative h-11 w-[168px] sm:h-12 sm:w-[196px]">
-        <Image
-          src="/logo.png"
-          alt="Novaterra Circular Economy Inc."
-          fill
-          sizes="196px"
-          className="object-contain object-left"
-          priority={priority}
-        />
-      </span>
+      <Image
+        src="/logo.png"
+        alt="Novaterra Circular Economy Inc."
+        width={220}
+        height={201}
+        className="h-12 w-auto object-contain object-left sm:h-14"
+        priority={priority}
+        quality={100}
+      />
     </Link>
   );
 }
