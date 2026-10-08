@@ -33,11 +33,12 @@ export function TeamSection({ members }: { members: TeamMember[] }) {
           </div>
         </FadeIn>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {published.map((member, i) => {
-            const row = Math.floor(i / 4);
-            const photoLeft = row % 2 === 0;
-            const textGreen = row % 2 === 0;
+            // First 4 (top half): photo left + forest text; last 4: photo right + blue text
+            const topHalf = i < 4;
+            const photoLeft = topHalf;
+            const textGreen = topHalf;
 
             return (
               <FadeIn key={`${member.name}-${member.sort_order}`} delay={i * 0.03}>

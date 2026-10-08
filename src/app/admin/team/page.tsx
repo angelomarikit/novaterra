@@ -33,7 +33,16 @@ export default function AdminTeamPage() {
         .select("*")
         .order("sort_order");
 
-      if (data?.length) setMembers(data as TeamMember[]);
+      if (!data?.length) return;
+
+      const rows = data as TeamMember[];
+      const names = new Set(rows.map((m) => m.name.trim().toLowerCase()));
+      const missing = TEAM.filter(
+        (m) => m.is_published && !names.has(m.name.trim().toLowerCase()),
+      );
+      setMembers(
+        [...rows, ...missing].sort((a, b) => a.sort_order - b.sort_order),
+      );
     }
     load();
   }, []);

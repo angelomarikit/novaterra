@@ -111,13 +111,35 @@ export async function getSectionImage(
   return section?.image_url || fallback;
 }
 
+function publishedDefaultTeam(): TeamMember[] {
+  return TEAM.filter((m) => m.is_published).sort(
+    (a, b) => a.sort_order - b.sort_order,
+  );
+}
+
+/** Merge CMS rows with the full 8-person leadership roster (adds Jared & Henry if missing). */
+function mergeTeamWithDefaults(rows: TeamMember[]): TeamMember[] {
+  const byName = new Map(
+    rows.map((m) => [m.name.trim().toLowerCase(), m] as const),
+  );
+
+  return publishedDefaultTeam().map((fallback) => {
+    const existing = byName.get(fallback.name.trim().toLowerCase());
+    if (!existing) return fallback;
+    return {
+      ...fallback,
+      ...existing,
+      photo_url: existing.photo_url || fallback.photo_url,
+      title: existing.title || fallback.title,
+      sort_order: existing.sort_order || fallback.sort_order,
+      is_published: true,
+    };
+  });
+}
+
 export async function getTeamMembers(): Promise<TeamMember[]> {
   const supabase = await createClient();
-  if (!supabase) {
-    return TEAM.filter((m) => m.is_published).sort(
-      (a, b) => a.sort_order - b.sort_order,
-    );
-  }
+  if (!supabase) return publishedDefaultTeam();
 
   const { data } = await supabase
     .from("team_members")
@@ -125,13 +147,9 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
     .eq("is_published", true)
     .order("sort_order", { ascending: true });
 
-  if (!data?.length) {
-    return TEAM.filter((m) => m.is_published).sort(
-      (a, b) => a.sort_order - b.sort_order,
-    );
-  }
+  if (!data?.length) return publishedDefaultTeam();
 
-  return data as TeamMember[];
+  return mergeTeamWithDefaults(data as TeamMember[]);
 }
 
 export async function getNewsSectionHeader(): Promise<NewsSectionHeader> {
