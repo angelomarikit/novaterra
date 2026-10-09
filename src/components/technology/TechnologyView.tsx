@@ -1,25 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 import {
   PYROLYSIS,
   PYROLYSIS_MODEL,
   CORE_PRINCIPLES,
-  CYCLE_STEPS,
-  PHILOSOPHY,
   SECTION_IMAGES,
 } from "@/lib/content/defaults";
 import { FadeIn, SectionHeading } from "@/components/shared/Motion";
 import { SectionImage } from "@/components/shared/SectionImage";
-import { cn } from "@/lib/utils";
 
 export default function TechnologyView({
   imageUrl = SECTION_IMAGES.technology_pyrolysis,
 }: {
   imageUrl?: string;
 }) {
-  const [step, setStep] = useState(0);
-
   return (
     <>
       <section className="relative overflow-hidden border-b border-stroke bg-white">
@@ -78,34 +73,26 @@ export default function TechnologyView({
           <FadeIn>
             <SectionHeading
               eyebrow="Novaterra Pyrolysis Model"
-              title="Identify → transform → recover → apply"
-              subtitle="A six-stage circular resource flow from feedstock characterization to end-use markets."
+              title="Circular Resource Flow"
+              subtitle="Identify → transform → recover → apply"
             />
           </FadeIn>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {PYROLYSIS_MODEL.map((item, i) => (
               <FadeIn key={item.step} delay={i * 0.04}>
-                <button
-                  type="button"
-                  onClick={() => setStep(i)}
-                  className={cn(
-                    "h-full w-full rounded-3xl border p-6 text-left transition",
-                    step === i
-                      ? "border-teal bg-white shadow-lg ring-1 ring-teal/20"
-                      : "border-stroke bg-white/70 hover:border-forest/25",
-                  )}
-                >
-                  <p className="font-display text-3xl font-bold text-lime">
-                    {item.step}
-                  </p>
-                  <h3 className="mt-2 font-display text-xl font-semibold text-forest-deep">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {item.body}
-                  </p>
-                </button>
+                <figure className="m-0">
+                  <Image
+                    src={item.image_url}
+                    alt={`${item.step} ${item.title} — ${item.body}`}
+                    width={780}
+                    height={514}
+                    className="h-auto w-full"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    quality={100}
+                    priority={i < 3}
+                  />
+                </figure>
               </FadeIn>
             ))}
           </div>
@@ -113,44 +100,26 @@ export default function TechnologyView({
       </section>
 
       <section className="section-pad bg-white">
-        <div className="container-page grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
+        <div className="container-page">
           <FadeIn>
             <SectionHeading
               eyebrow={CORE_PRINCIPLES.title}
               title={CORE_PRINCIPLES.subtitle}
               subtitle={CORE_PRINCIPLES.body}
             />
-            <div className="mt-8 flex flex-wrap gap-3">
-              {CORE_PRINCIPLES.stages.map((stage) => (
-                <span
-                  key={stage}
-                  className="rounded-full border border-forest/15 bg-sand px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-forest"
-                >
-                  {stage}
-                </span>
-              ))}
-            </div>
           </FadeIn>
 
-          <FadeIn delay={0.1}>
-            <div className="relative overflow-hidden rounded-[2rem] bg-forest-deep p-8 text-white">
-              <div className="pointer-events-none absolute right-0 top-0 h-24 w-28 earth-stripes opacity-25" />
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lime">
-                Cycle overview
-              </p>
-              <ol className="mt-6 space-y-3">
-                {CYCLE_STEPS.map((s, i) => (
-                  <li key={s.label} className="flex gap-3 text-sm">
-                    <span className="font-semibold text-teal">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-white/85">{s.label}</span>
-                  </li>
-                ))}
-              </ol>
-              <p className="mt-8 border-t border-white/10 pt-6 text-sm italic text-white/70">
-                {PHILOSOPHY}
-              </p>
+          <FadeIn delay={0.08}>
+            <div className="mt-10">
+              <Image
+                src={CORE_PRINCIPLES.imageUrl}
+                alt="Use, Recover, Recycle, Reuse, Reintroduce — waste is not the end of the cycle"
+                width={1024}
+                height={224}
+                className="h-auto w-full"
+                sizes="(max-width: 1400px) 100vw, 1400px"
+                quality={100}
+              />
             </div>
           </FadeIn>
         </div>

@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   SUSTAINABILITY_PILLARS,
+  SUSTAINABILITY_BY_DESIGN,
   LONG_TERM_VISION,
-  FUTURE_STATEMENT,
+  FUTURE_OF_CIRCULAR_ECONOMY,
   CORE_PRINCIPLES,
   SECTION_IMAGES,
 } from "@/lib/content/defaults";
 import { FadeIn, SectionHeading } from "@/components/shared/Motion";
-import { SectionImage } from "@/components/shared/SectionImage";
 import { getSectionImage } from "@/lib/content/fetch";
 
 export const metadata: Metadata = {
   title: "Sustainability",
   description:
-    "Sustainability by design — environmental, economic, social, and governance outcomes.",
+    "Sustainability by design — environmental, social, economic, and governance outcomes.",
 };
 
 const PILLARS = [
@@ -22,12 +23,12 @@ const PILLARS = [
     title: "Environmental",
     items: SUSTAINABILITY_PILLARS.environmental,
   },
+  { key: "social", title: "Social", items: SUSTAINABILITY_PILLARS.social },
   {
     key: "economic",
     title: "Economic",
     items: SUSTAINABILITY_PILLARS.economic,
   },
-  { key: "social", title: "Social", items: SUSTAINABILITY_PILLARS.social },
   {
     key: "governance",
     title: "Governance",
@@ -44,39 +45,25 @@ export default async function SustainabilityPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-stroke bg-white">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(140,198,63,0.16),transparent_45%)]" />
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 earth-stripes opacity-[0.16]" />
-        <div className="container-page relative section-pad">
+      <section className="section-pad bg-white">
+        <div className="container-page grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal">
-              Sustainability by Design
-            </p>
-            <h1 className="mt-3 max-w-3xl font-display text-4xl font-bold tracking-tight text-forest-deep sm:text-5xl">
-              Measuring impact across the full circular system
+            <h1 className="font-display text-4xl font-bold tracking-tight text-forest-deep sm:text-5xl">
+              {SUSTAINABILITY_BY_DESIGN.title}
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
-              Diversion, recovery, and waste circularity — designed into
-              infrastructure, markets, and governance from day one.
+              {SUSTAINABILITY_BY_DESIGN.body}
             </p>
-          </FadeIn>
-        </div>
-      </section>
 
-      <section className="section-pad">
-        <div className="container-page grid gap-6 lg:grid-cols-[1fr_0.85fr] lg:items-stretch">
-          <div className="grid gap-4 sm:grid-cols-2">
-            {PILLARS.map((pillar, i) => (
-              <FadeIn key={pillar.key} delay={i * 0.05}>
-                <article className="h-full rounded-[1.5rem] border border-stroke bg-white p-5">
-                  <div className="flex items-center justify-between gap-3">
-                    <h2 className="font-display text-xl font-semibold text-forest">
-                      {pillar.title}
-                    </h2>
-                    <span className="rounded-full bg-sand px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-muted">
-                      ESG+
-                    </span>
-                  </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+              {PILLARS.map((pillar, i) => (
+                <article
+                  key={pillar.key}
+                  className="rounded-[1.5rem] border border-stroke bg-sand/60 p-5"
+                >
+                  <h2 className="font-display text-lg font-semibold uppercase tracking-wide text-forest">
+                    {pillar.title}
+                  </h2>
                   <div className="mt-2.5 h-1 w-8 rounded-full brand-gradient" />
                   <ul className="mt-4 space-y-2">
                     {pillar.items.map((item) => (
@@ -90,15 +77,20 @@ export default async function SustainabilityPage() {
                     ))}
                   </ul>
                 </article>
-              </FadeIn>
-            ))}
-          </div>
-          <FadeIn delay={0.1}>
-            <SectionImage
+              ))}
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.08}>
+            <Image
               src={esgImage}
-              alt="Sustainability outcomes across environment and community"
-              className="h-full min-h-[320px] w-full"
-              sizes="(max-width: 1024px) 100vw, 38vw"
+              alt="Stewardship, recovery, and waste circularity around Novaterra infrastructure"
+              width={592}
+              height={558}
+              className="h-auto w-full"
+              sizes="(max-width: 1024px) 100vw, 45vw"
+              quality={100}
+              priority
             />
           </FadeIn>
         </div>
@@ -120,28 +112,15 @@ export default async function SustainabilityPage() {
             </p>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {[
-                { label: "Diversion", tone: "bg-leaf" },
-                { label: "Recovery", tone: "bg-teal" },
-                { label: "Circularity", tone: "bg-ocean" },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className={`rounded-3xl ${item.tone} px-4 py-8 text-center font-display text-sm font-semibold uppercase tracking-[0.12em]`}
-                >
-                  {item.label}
-                </div>
-              ))}
-              {CORE_PRINCIPLES.stages.map((stage) => (
-                <div
-                  key={stage}
-                  className="rounded-3xl border border-white/15 bg-white/5 px-4 py-6 text-center text-xs font-semibold uppercase tracking-[0.14em] text-white/85"
-                >
-                  {stage}
-                </div>
-              ))}
-            </div>
+            <Image
+              src={CORE_PRINCIPLES.imageUrl}
+              alt="Use, Recover, Recycle, Reuse, Reintroduce — waste is not the end of the cycle"
+              width={1024}
+              height={224}
+              className="h-auto w-full rounded-2xl bg-white p-4"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={100}
+            />
           </FadeIn>
         </div>
       </section>
@@ -174,18 +153,28 @@ export default async function SustainabilityPage() {
       </section>
 
       <section className="section-pad">
-        <div className="container-page">
+        <div className="container-page grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <FadeIn>
-            <article className="relative overflow-hidden rounded-[2rem] border border-stroke bg-white p-8 sm:p-12">
-              <div className="pointer-events-none absolute right-0 top-0 h-40 w-40 rounded-full brand-gradient opacity-20 blur-2xl" />
-              <div className="pointer-events-none absolute bottom-0 left-0 h-24 w-32 earth-stripes opacity-15" />
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal">
-                Future of Circular Economy
-              </p>
-              <p className="relative mt-5 max-w-4xl text-lg leading-relaxed text-forest-deep sm:text-xl">
-                {FUTURE_STATEMENT}
-              </p>
-            </article>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal">
+              {FUTURE_OF_CIRCULAR_ECONOMY.eyebrow}
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-forest-deep sm:text-4xl">
+              {FUTURE_OF_CIRCULAR_ECONOMY.title}
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted sm:text-lg">
+              {FUTURE_OF_CIRCULAR_ECONOMY.body}
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.08}>
+            <Image
+              src={FUTURE_OF_CIRCULAR_ECONOMY.imageUrl}
+              alt="Future of circular economy — innovation, stewardship, and regenerative systems"
+              width={507}
+              height={481}
+              className="mx-auto h-auto w-full max-w-[380px]"
+              sizes="(max-width: 1024px) 70vw, 380px"
+              quality={100}
+            />
           </FadeIn>
         </div>
       </section>

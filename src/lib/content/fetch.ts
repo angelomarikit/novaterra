@@ -62,20 +62,30 @@ export async function getHomeHero() {
   const tags =
     (section.content_json?.tags as string[] | undefined) || HERO.tags;
 
+  // Prefer new brand defaults when CMS still has the previous hero copy
+  const isLegacyHero =
+    !!section.body?.includes(
+      "We develop, build and operate responsible circular-economy infrastructure",
+    ) || section.title === "Transforming Waste.";
+
+  if (isLegacyHero) {
+    return { ...HERO, tags };
+  }
+
   const subtitleParts = section.subtitle
     ? section.subtitle.split(/(?<=\.)\s+/).filter(Boolean)
     : [];
 
   const lines = [
     section.title || HERO.lines[0],
-    subtitleParts[0] || HERO.lines[1],
-    subtitleParts[1] || HERO.lines[2],
-  ];
+    ...(subtitleParts.length ? subtitleParts : HERO.lines.slice(1)),
+  ].filter(Boolean);
 
   return {
     ...HERO,
     lines,
     description: section.body || HERO.description,
+    imageUrl: section.image_url || HERO.imageUrl,
     tags,
   };
 }

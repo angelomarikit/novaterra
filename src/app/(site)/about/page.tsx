@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   VISION,
   MISSION,
   VALUES,
   COMMITMENTS,
   WHY_EXISTS,
+  FUTURE_OF_CIRCULAR_ECONOMY,
 } from "@/lib/content/defaults";
 import { FadeIn, SectionHeading } from "@/components/shared/Motion";
 import { SectionImage } from "@/components/shared/SectionImage";
@@ -76,7 +78,7 @@ export default async function AboutPage() {
           <FadeIn>
             <SectionHeading
               eyebrow="Corporate Values"
-              title="Principles that guide every project"
+              title="What Guides Novaterra?"
             />
           </FadeIn>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -84,7 +86,7 @@ export default async function AboutPage() {
               <FadeIn key={value.title} delay={i * 0.04}>
                 <article className="h-full rounded-3xl border border-stroke bg-sand/50 p-6 transition hover:border-leaf/25 hover:bg-white hover:shadow-md">
                   <div className="mb-3 h-1.5 w-8 rounded-full brand-gradient" />
-                  <h3 className="font-display text-xl font-semibold text-forest">
+                  <h3 className="font-display text-xl font-semibold uppercase tracking-wide text-forest">
                     {value.title}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -103,8 +105,8 @@ export default async function AboutPage() {
           <FadeIn>
             <SectionHeading
               eyebrow="Our Commitment"
-              title="Responsible development, end to end"
-              subtitle="Six commitments that keep projects technically sound, commercially credible, and environmentally accountable."
+              title="Our Commitment to Responsible Development"
+              subtitle="Novaterra is committed to developing projects based on:"
             />
           </FadeIn>
           <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -164,6 +166,33 @@ export default async function AboutPage() {
                 />
               </div>
             </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      <section className="section-pad bg-white">
+        <div className="container-page grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <FadeIn>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal">
+              {FUTURE_OF_CIRCULAR_ECONOMY.eyebrow}
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-forest-deep sm:text-4xl">
+              {FUTURE_OF_CIRCULAR_ECONOMY.title}
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted sm:text-lg">
+              {FUTURE_OF_CIRCULAR_ECONOMY.body}
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.08}>
+            <Image
+              src={FUTURE_OF_CIRCULAR_ECONOMY.imageUrl}
+              alt="Future of circular economy — innovation, stewardship, and regenerative systems"
+              width={507}
+              height={481}
+              className="mx-auto h-auto w-full max-w-[380px]"
+              sizes="(max-width: 1024px) 70vw, 380px"
+              quality={100}
+            />
           </FadeIn>
         </div>
       </section>

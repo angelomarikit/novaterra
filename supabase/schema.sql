@@ -222,10 +222,14 @@ values
 (
   'home',
   'hero_banner',
-  'Transforming Waste.',
-  'Recovering Value. Building a Circular Future.',
-  'We develop, build and operate responsible circular-economy infrastructure that converts suitable waste streams into valuable energy, materials and industrial by-products.',
-  null,
+  'From Waste to Progress.',
+  'Building a Sustainable Future.',
+  'Novaterra Circular Economy Inc. is an environmental sustainability and circular economy-focused company, transforming waste streams into valuable resources, energy products, and industrial feedstocks.
+
+Our core technology platform is pyrolysis, a controlled thermochemical conversion process capable of processing selected carbon-rich waste materials into liquid, gas, and solid outputs.
+
+Going far beyond conventional disposal, Novaterra''s holistic, closed-loop framework turns waste liabilities into an integrated circular ecosystem.',
+  '/sections/circular-value.png',
   '{"tags":["Environmental Infrastructure","Circular Economy","Resource Recovery","Pyrolysis Technology"]}'::jsonb,
   1
 ),

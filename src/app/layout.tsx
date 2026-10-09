@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Novaterra Circular Economy Inc.",
     description:
-      "Transforming waste. Recovering value. Building a circular future.",
+      "From waste to progress: building a sustainable future through pyrolysis and circular-economy infrastructure.",
     type: "website",
     url: "https://novaterracircular.com",
   },

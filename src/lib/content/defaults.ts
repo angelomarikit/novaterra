@@ -11,10 +11,11 @@ export const SITE: SiteSettings = {
 
 /** Default section images — editable via Admin CMS (image_url) */
 export const SECTION_IMAGES = {
+  home_hero: "/sections/circular-value.png",
   home_why_exists: "/sections/recovery.jpg",
   about_long_term_vision: "/sections/vision.jpg",
   technology_pyrolysis: "/sections/pyrolysis.jpg",
-  sustainability_esg: "/sections/sustainability.jpg",
+  sustainability_esg: "/sections/sustainability-by-design.png",
 } as const;
 
 export const NEWS_IMAGES = {
@@ -96,12 +97,15 @@ export const NAV_LINKS = [
 export const HERO = {
   eyebrow: "Circular Economy Infrastructure",
   lines: [
-    "Transforming Waste.",
-    "Recovering Value.",
-    "Building a Circular Future.",
+    "From Waste to Progress.",
+    "Building a Sustainable Future.",
   ],
-  description:
-    "We develop, build and operate responsible circular-economy infrastructure that converts suitable waste streams into valuable energy, materials and industrial by-products.",
+  description: [
+    "Novaterra Circular Economy Inc. is an environmental sustainability and circular economy-focused company, transforming waste streams into valuable resources, energy products, and industrial feedstocks.",
+    "Our core technology platform is pyrolysis, a controlled thermochemical conversion process capable of processing selected carbon-rich waste materials into liquid, gas, and solid outputs.",
+    "Going far beyond conventional disposal, Novaterra's holistic, closed-loop framework turns waste liabilities into an integrated circular ecosystem.",
+  ].join("\n\n"),
+  imageUrl: SECTION_IMAGES.home_hero,
   primaryCta: { label: "Explore Our Cycle", href: "/technology" },
   secondaryCta: { label: "Partner With Us", href: "/contact" },
   tags: [
@@ -155,27 +159,69 @@ export const CYCLE_STEPS = [
 ];
 
 export const VALUE_CHAIN = [
-  { title: "Waste", body: "We understand the feedstock problem." },
-  { title: "Technology", body: "We identify appropriate conversion pathways." },
-  { title: "Infrastructure", body: "We develop the physical system required to process the material." },
-  { title: "Recovery", body: "We seek to maximize useful outputs." },
-  { title: "Market", body: "We connect recovered products with potential end users." },
-  { title: "Sustainability", body: "We measure environmental, economic and social outcomes." },
+  {
+    title: "Waste",
+    body: "We understand the feedstock problem.",
+    image_url: "/sections/value-chain/01-waste.png",
+  },
+  {
+    title: "Technology",
+    body: "We identify appropriate conversion pathways.",
+    image_url: "/sections/value-chain/02-technology.png",
+  },
+  {
+    title: "Infrastructure",
+    body: "We develop the physical system required to process the material.",
+    image_url: "/sections/value-chain/03-infrastructure.png",
+  },
+  {
+    title: "Recovery",
+    body: "We seek to maximize useful outputs.",
+    image_url: "/sections/value-chain/04-recovery.png",
+  },
+  {
+    title: "Market",
+    body: "We connect recovered products with potential end users.",
+    image_url: "/sections/value-chain/05-market.png",
+  },
+  {
+    title: "Sustainability",
+    body: "We measure environmental, economic and social outcomes.",
+    image_url: "/sections/value-chain/06-sustainability.png",
+  },
 ];
 
 export const VISION =
   "To build a future where waste is transformed into resources, materials remain in productive circulation, and communities and industries progress toward more sustainable and resilient economic systems.";
 
 export const MISSION =
-  "To develop, build and operate responsible circular-economy infrastructure that converts suitable waste streams into valuable energy, materials and industrial by-products through advanced pyrolysis and resource-recovery technologies.";
+  "To develop, build and operate responsible circular-economy infrastructure that converts suitable waste streams into valuable energy, materials and industrial by-products through advanced pyrolysis and resource-recovery technologies, ultimately lowering our global carbon footprint.";
 
 export const VALUES = [
-  { title: "Innovation", body: "We pursue better ways to recover and utilize resources." },
-  { title: "Integrity", body: "We operate with transparency, accountability and professionalism." },
-  { title: "Collaboration", body: "We build partnerships across government, industry, technology and communities." },
-  { title: "Responsibility", body: "We recognize our responsibility to people, communities and the environment." },
-  { title: "Efficiency", body: "We seek to maximize useful resource recovery." },
-  { title: "Sustainability", body: "We pursue solutions that create long-term environmental, economic and social value." },
+  {
+    title: "Innovation",
+    body: "We pursue better ways to recover and utilize resources.",
+  },
+  {
+    title: "Integrity",
+    body: "We operate with transparency, accountability and professionalism.",
+  },
+  {
+    title: "Collaboration",
+    body: "We build partnerships across government, industry, technology and communities.",
+  },
+  {
+    title: "Responsibility",
+    body: "We recognize our responsibility to people, communities and the environment.",
+  },
+  {
+    title: "Efficiency",
+    body: "We seek to maximize useful resource recovery.",
+  },
+  {
+    title: "Sustainability",
+    body: "We pursue solutions that create long-term environmental, economic and social value.",
+  },
 ];
 
 export const COMMITMENTS = [
@@ -295,39 +341,52 @@ export const PYROLYSIS_MODEL = [
     step: "01",
     title: "Feedstock",
     body: "Suitable waste materials are identified and characterized.",
+    image_url: "/sections/pyrolysis-model/01-feedstock.png",
   },
   {
     step: "02",
     title: "Preparation",
     body: "Materials are sorted, prepared, sized, dried, or conditioned as required.",
+    image_url: "/sections/pyrolysis-model/02-preparation.png",
   },
   {
     step: "03",
     title: "Thermal Conversion",
     body: "The prepared material enters a controlled pyrolysis process.",
+    image_url: "/sections/pyrolysis-model/03-thermal-conversion.png",
   },
   {
     step: "04",
     title: "Product Separation",
     body: "Liquid, gas and solid fractions are separated and collected.",
+    image_url: "/sections/pyrolysis-model/04-product-separation.png",
   },
   {
     step: "05",
     title: "Processing",
     body: "Recovered products may undergo purification, upgrading, stabilization or further processing.",
+    image_url: "/sections/pyrolysis-model/05-processing.png",
   },
   {
     step: "06",
     title: "End Use",
     body: "Qualified products are directed toward appropriate industrial, agricultural, energy or commercial applications.",
+    image_url: "/sections/pyrolysis-model/06-end-use.png",
   },
 ];
 
 export const CORE_PRINCIPLES = {
   title: "Core Principles",
   subtitle: "Waste is not the end of the cycle",
-  body: "Our objective is to keep resources productive for as long as possible. Pyrolysis complements — rather than replaces — waste prevention, reuse, and conventional recycling by managing difficult residual waste streams.",
+  body: "Our objective is to keep materials and embedded resources productive for as long as technically, economically, and environmentally appropriate. Pyrolysis is one component of this system. It does not replace waste prevention, reuse or conventional recycling. Instead, it can provide an additional recovery pathway for appropriate residual waste streams that are difficult to manage through higher-priority methods.",
   stages: ["Use", "Recover", "Recycle", "Reuse", "Reintroduce"],
+  imageUrl: "/sections/core-principles-cycle.png",
+};
+
+export const SUSTAINABILITY_BY_DESIGN = {
+  title: "Sustainability by Design",
+  body: "For Novaterra, sustainability is not limited to what happens inside the reactor.",
+  imageUrl: "/sections/sustainability-by-design.png",
 };
 
 export const SUSTAINABILITY_PILLARS = {
@@ -339,6 +398,13 @@ export const SUSTAINABILITY_PILLARS = {
     "Reduced dependence on disposal",
     "Material circularity",
   ],
+  social: [
+    "Local employment",
+    "Skills development",
+    "Community engagement",
+    "Worker health and safety",
+    "Responsible project development",
+  ],
   economic: [
     "New resource streams",
     "Local infrastructure investment",
@@ -346,13 +412,6 @@ export const SUSTAINABILITY_PILLARS = {
     "Employment",
     "Industrial development",
     "Long-term project viability",
-  ],
-  social: [
-    "Local employment",
-    "Skills development",
-    "Community engagement",
-    "Worker health and safety",
-    "Responsible project development",
   ],
   governance: [
     "Regulatory compliance",
@@ -381,8 +440,15 @@ export const LONG_TERM_VISION = {
     "Over time, this network can create a more integrated system for managing residual waste and recovering resources.",
 };
 
-export const FUTURE_STATEMENT =
-  "The future is not a world without waste—it is a world where waste no longer represents the end of value. The circular economy will redefine how we produce, consume, recover, and reuse resources, transforming residual materials into new inputs for energy, industry, agriculture, and manufacturing. Through innovation, responsible technology, and integrated infrastructure, we can move from a linear economy of disposal toward a regenerative system where resources remain in circulation and value is continuously recovered. Novaterra is building toward that future—where waste becomes a resource, recovery becomes an opportunity, and sustainability becomes part of how the economy works.";
+export const FUTURE_OF_CIRCULAR_ECONOMY = {
+  eyebrow: "Future of",
+  title: "Circular Economy",
+  body: "The future is not a world without waste—it is a world where waste no longer represents the end of value. The circular economy will redefine how we produce, consume, recover, and reuse resources, transforming residual materials into new inputs for energy, industry, agriculture, and manufacturing. Through innovation, responsible technology, and integrated infrastructure, we can move from a linear economy of disposal toward a regenerative system where resources remain in circulation and value is continuously recovered. Novaterra is building toward that future—where waste becomes a resource, recovery becomes an opportunity, and sustainability becomes part of how the economy works.",
+  imageUrl: "/sections/future-circular-economy.png",
+};
+
+/** @deprecated Prefer FUTURE_OF_CIRCULAR_ECONOMY.body */
+export const FUTURE_STATEMENT = FUTURE_OF_CIRCULAR_ECONOMY.body;
 
 export const PHILOSOPHY =
   "Technology creates the possibility. Integration creates the business. Sustainability creates the long-term value.";
