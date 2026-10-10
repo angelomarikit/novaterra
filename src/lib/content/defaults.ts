@@ -94,7 +94,15 @@ export const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
-export const HERO = {
+export const HERO: {
+  eyebrow: string;
+  lines: string[];
+  description: string;
+  imageUrl: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta: { label: string; href: string };
+  tags: string[];
+} = {
   eyebrow: "Circular Economy Infrastructure",
   lines: [
     "From Waste to Progress.",

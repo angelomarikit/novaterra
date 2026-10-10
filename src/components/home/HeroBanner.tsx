@@ -7,7 +7,7 @@ import { ArrowRight, Leaf } from "lucide-react";
 import { HERO, SECTION_IMAGES } from "@/lib/content/defaults";
 import { Button } from "@/components/ui/Button";
 
-type HeroContent = typeof HERO & { imageUrl?: string };
+export type HeroContent = typeof HERO;
 
 export function HeroBanner({ content = HERO }: { content?: HeroContent }) {
   const reduce = useReducedMotion();

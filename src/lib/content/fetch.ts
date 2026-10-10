@@ -55,7 +55,7 @@ export async function getSiteSettings() {
   };
 }
 
-export async function getHomeHero() {
+export async function getHomeHero(): Promise<typeof HERO> {
   const section = await getSection("home", "hero_banner");
   if (!section) return HERO;
 
