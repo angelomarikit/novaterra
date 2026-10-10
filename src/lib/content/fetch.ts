@@ -14,6 +14,7 @@ import {
   NEWS_SECTION,
   DEFAULT_BLOG_POSTS,
   TEAM,
+  VALUE_CHAIN_SECTION,
 } from "@/lib/content/defaults";
 
 export async function getSection(
@@ -59,8 +60,13 @@ export async function getHomeHero(): Promise<typeof HERO> {
   const section = await getSection("home", "hero_banner");
   if (!section) return HERO;
 
-  const tags =
-    (section.content_json?.tags as string[] | undefined) || HERO.tags;
+  const tags = (
+    (section.content_json?.tags as string[] | undefined) || HERO.tags
+  ).map((tag) =>
+    tag === "Environmental Infrastructure"
+      ? "Environmental Sustainability"
+      : tag,
+  );
 
   // Prefer new brand defaults when CMS still has the previous hero copy
   const isLegacyHero =
@@ -119,6 +125,18 @@ export async function getSectionImage(
 ) {
   const section = await getSection(pageKey, sectionKey);
   return section?.image_url || fallback;
+}
+
+export async function getValueChainSection() {
+  const section = await getSection("home", "value_chain");
+  if (!section) return VALUE_CHAIN_SECTION;
+
+  return {
+    title: section.title || VALUE_CHAIN_SECTION.title,
+    subtitle: section.subtitle || VALUE_CHAIN_SECTION.subtitle,
+    imageUrl: section.image_url || VALUE_CHAIN_SECTION.imageUrl,
+    items: VALUE_CHAIN_SECTION.items,
+  };
 }
 
 function publishedDefaultTeam(): TeamMember[] {

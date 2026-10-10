@@ -114,16 +114,54 @@ export function HeroBanner({ content = HERO }: { content?: HeroContent }) {
           transition={{ duration: 0.9, delay: 0.2 }}
           className="relative mx-auto w-full"
         >
-          <Image
-            src={imageUrl}
-            alt="Novaterra Circular Value — from waste stream to recovered value and back again"
-            width={876}
-            height={701}
-            className="h-auto w-full"
-            sizes="(max-width: 1024px) 100vw, 640px"
-            quality={100}
-            priority
-          />
+          {/* Soft ambient glow behind the diagram */}
+          <div className="pointer-events-none absolute left-1/2 top-[42%] h-[55%] w-[55%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,169,157,0.28)_0%,rgba(140,198,63,0.12)_45%,transparent_70%)] blur-2xl" />
+          {!reduce ? (
+            <>
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-[42%] h-[48%] w-[48%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-teal/25"
+                animate={{ scale: [1, 1.06, 1], opacity: [0.35, 0.15, 0.35] }}
+                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-[42%] h-[58%] w-[58%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-leaf/20"
+                animate={{ scale: [1, 1.08, 1], opacity: [0.25, 0.08, 0.25] }}
+                transition={{
+                  duration: 7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.6,
+                }}
+              />
+            </>
+          ) : null}
+
+          <motion.div
+            animate={
+              reduce
+                ? undefined
+                : { y: [0, -8, 0] }
+            }
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="relative"
+          >
+            <Image
+              src={imageUrl}
+              alt="Novaterra Circular Value — from waste stream to recovered value and back again"
+              width={746}
+              height={599}
+              className="relative h-auto w-full drop-shadow-[0_18px_40px_rgba(30,50,28,0.12)]"
+              sizes="(max-width: 1024px) 100vw, 640px"
+              quality={100}
+              priority
+            />
+          </motion.div>
         </motion.div>
       </div>
     </section>

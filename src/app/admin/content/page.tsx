@@ -14,6 +14,7 @@ import {
   LONG_TERM_VISION,
   NEWS_SECTION,
   SECTION_IMAGES,
+  VALUE_CHAIN_SECTION,
 } from "@/lib/content/defaults";
 
 const FALLBACK: ContentSection[] = [
@@ -40,6 +41,22 @@ const FALLBACK: ContentSection[] = [
       mission: WHY_EXISTS.mission,
     },
     sort_order: 2,
+    is_published: true,
+  },
+  {
+    page_key: "home",
+    section_key: "value_chain",
+    title: VALUE_CHAIN_SECTION.title,
+    subtitle: VALUE_CHAIN_SECTION.subtitle,
+    body: VALUE_CHAIN_SECTION.subtitle,
+    image_url: VALUE_CHAIN_SECTION.imageUrl,
+    content_json: {
+      items: VALUE_CHAIN_SECTION.items.map((item) => ({
+        title: item.title,
+        body: item.body,
+      })),
+    },
+    sort_order: 3,
     is_published: true,
   },
   {
@@ -99,7 +116,7 @@ const FALLBACK: ContentSection[] = [
     body: NEWS_SECTION.subtitle,
     image_url: null,
     content_json: {},
-    sort_order: 4,
+    sort_order: 5,
     is_published: true,
   },
   {
@@ -128,12 +145,34 @@ export default function AdminContentPage() {
   useEffect(() => {
     async function load() {
       const supabase = createClient();
-      if (!supabase) return;
+      if (supabase) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        setEmail(user?.email ?? null);
+      }
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setEmail(user?.email ?? null);
+      try {
+        const res = await fetch("/api/admin/content");
+        if (res.ok) {
+          const json = (await res.json()) as { sections?: ContentSection[] };
+          const rows = json.sections ?? [];
+          if (rows.length > 0) {
+            const keys = new Set(
+              rows.map((r) => `${r.page_key}::${r.section_key}`),
+            );
+            const missing = FALLBACK.filter(
+              (f) => !keys.has(`${f.page_key}::${f.section_key}`),
+            );
+            setSections([...rows, ...missing]);
+            return;
+          }
+        }
+      } catch {
+        // fall through to browser client / fallbacks
+      }
+
+      if (!supabase) return;
 
       const { data } = await supabase
         .from("content_sections")
@@ -142,7 +181,12 @@ export default function AdminContentPage() {
         .order("sort_order");
 
       if (data && data.length > 0) {
-        setSections(data as ContentSection[]);
+        const rows = data as ContentSection[];
+        const keys = new Set(rows.map((r) => `${r.page_key}::${r.section_key}`));
+        const missing = FALLBACK.filter(
+          (f) => !keys.has(`${f.page_key}::${f.section_key}`),
+        );
+        setSections([...rows, ...missing]);
       }
     }
     load();
@@ -165,15 +209,6 @@ export default function AdminContentPage() {
   async function save() {
     setSaving(true);
     setNote("");
-    const supabase = createClient();
-
-    if (!supabase) {
-      setNote(
-        "Local preview — image URL updated in this session only. Connect Supabase to persist.",
-      );
-      setSaving(false);
-      return;
-    }
 
     const payload = {
       page_key: active.page_key,
@@ -187,17 +222,37 @@ export default function AdminContentPage() {
       is_published: active.is_published,
     };
 
-    const { error } = active.id
-      ? await supabase
-          .from("content_sections")
-          .update(payload)
-          .eq("id", active.id)
-      : await supabase.from("content_sections").upsert(payload, {
-          onConflict: "page_key,section_key",
-        });
+    try {
+      const res = await fetch("/api/admin/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json()) as {
+        error?: string;
+        section?: ContentSection;
+      };
+
+      if (!res.ok) {
+        setNote(
+          json.error ||
+            "Save failed. Ensure SUPABASE_SERVICE_ROLE_KEY is set in .env.local.",
+        );
+        setSaving(false);
+        return;
+      }
+
+      if (json.section) {
+        setSections((prev) =>
+          prev.map((s, i) => (i === activeId ? { ...s, ...json.section! } : s)),
+        );
+      }
+      setNote("Saved successfully.");
+    } catch {
+      setNote("Save failed — network or server error.");
+    }
 
     setSaving(false);
-    setNote(error ? error.message : "Saved successfully.");
   }
 
   return (

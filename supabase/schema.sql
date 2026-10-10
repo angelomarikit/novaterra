@@ -230,7 +230,7 @@ Our core technology platform is pyrolysis, a controlled thermochemical conversio
 
 Going far beyond conventional disposal, Novaterra''s holistic, closed-loop framework turns waste liabilities into an integrated circular ecosystem.',
   '/sections/circular-value.png',
-  '{"tags":["Environmental Infrastructure","Circular Economy","Resource Recovery","Pyrolysis Technology"]}'::jsonb,
+  '{"tags":["Environmental Sustainability","Circular Economy","Resource Recovery","Pyrolysis Technology"]}'::jsonb,
   1
 ),
 (
@@ -255,13 +255,23 @@ Going far beyond conventional disposal, Novaterra''s holistic, closed-loop frame
 ),
 (
   'home',
+  'value_chain',
+  'More Than a Pyrolysis Plant',
+  'Novaterra''s strength lies in connecting the complete value chain.',
+  'Novaterra''s strength lies in connecting the complete value chain.',
+  '/sections/value-chain-board-2x.png',
+  '{"items":[{"title":"Waste","body":"We understand the feedstock problem."},{"title":"Technology","body":"We identify appropriate conversion pathways."},{"title":"Infrastructure","body":"We develop the physical system required to process the material."},{"title":"Recovery","body":"We seek to maximize useful outputs."},{"title":"Market","body":"We connect recovered products with potential end users."},{"title":"Sustainability","body":"We measure environmental, economic and social outcomes."}]}'::jsonb,
+  4
+),
+(
+  'home',
   'news_highlights',
   'News, Articles & Insights',
   'Updates from our circular-economy journey',
   'Follow project milestones, technology explainers, and partnership news as Novaterra develops responsible waste-to-resource infrastructure across the Philippines.',
   null,
   '{}'::jsonb,
-  4
+  5
 ),
 (
   'about',

@@ -117,7 +117,7 @@ export const HERO: {
   primaryCta: { label: "Explore Our Cycle", href: "/technology" },
   secondaryCta: { label: "Partner With Us", href: "/contact" },
   tags: [
-    "Environmental Infrastructure",
+    "Environmental Sustainability",
     "Circular Economy",
     "Resource Recovery",
     "Pyrolysis Technology",
@@ -198,6 +198,14 @@ export const VALUE_CHAIN = [
     image_url: "/sections/value-chain/06-sustainability.png",
   },
 ];
+
+export const VALUE_CHAIN_SECTION = {
+  title: "More Than a Pyrolysis Plant",
+  subtitle:
+    "Novaterra's strength lies in connecting the complete value chain.",
+  imageUrl: "/sections/value-chain-board-2x.png",
+  items: VALUE_CHAIN,
+};
 
 export const VISION =
   "To build a future where waste is transformed into resources, materials remain in productive circulation, and communities and industries progress toward more sustainable and resilient economic systems.";

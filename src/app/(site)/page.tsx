@@ -13,13 +13,15 @@ import {
   getHomeHero,
   getNewsSectionHeader,
   getPublishedBlogPosts,
+  getValueChainSection,
   getWhyExists,
 } from "@/lib/content/fetch";
 
 export default async function HomePage() {
-  const [hero, whyExists, newsHeader, posts] = await Promise.all([
+  const [hero, whyExists, valueChain, newsHeader, posts] = await Promise.all([
     getHomeHero(),
     getWhyExists(),
+    getValueChainSection(),
     getNewsSectionHeader(),
     getPublishedBlogPosts(3),
   ]);
@@ -30,7 +32,7 @@ export default async function HomePage() {
       <WhyExistsSection content={whyExists} />
       <WasteChallengeSection />
       <NovaterraCycleSection />
-      <ValueChainSection />
+      <ValueChainSection content={valueChain} />
       <NewsSection header={newsHeader} posts={posts} />
       <HomeCta />
     </>
